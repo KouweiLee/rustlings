@@ -5,7 +5,7 @@ mod sausage_factory {
         String::from("Ginger")
     }
 
-    fn make_sausage() {
+    pub fn make_sausage() {
         get_secret_recipe();
         println!("sausage!");
     }
@@ -14,3 +14,4 @@ mod sausage_factory {
 fn main() {
     sausage_factory::make_sausage();
 }
+// 一般文件中.rs就是一个mod，mod的pub和非pub就类似于C文件中的not static和static

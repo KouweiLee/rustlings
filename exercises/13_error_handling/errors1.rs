@@ -25,7 +25,7 @@ mod tests {
     fn generates_nametag_text_for_a_nonempty_name() {
         assert_eq!(
             generate_nametag_text("Beyoncé".to_string()).as_deref(),
-            Ok("Hi! My name is Beyoncé"),
+            Some("Hi! My name is Beyoncé"),
         );
     }
 
@@ -34,7 +34,7 @@ mod tests {
         assert_eq!(
             generate_nametag_text(String::new())
                 .as_ref()
-                .map_err(|e| e.as_str()),
+                .ok_or_else(|| "Empty names aren't allowed"),
             Err("Empty names aren't allowed"),
         );
     }

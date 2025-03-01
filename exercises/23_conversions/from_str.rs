@@ -40,8 +40,25 @@ enum ParsePersonError {
 // 6. If parsing the age fails, return the error `ParsePersonError::ParseInt`.
 impl FromStr for Person {
     type Err = ParsePersonError;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {}
+    
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let sp: Vec<_> = s.split(',').collect();
+        if sp.len() != 2 {
+            return Err(Self::Err::BadLen);
+        }
+        let name = sp[0];
+        if name.is_empty() {
+            return Err(Self::Err::NoName);
+        }
+        let age = sp[1].parse::<u8>();
+        if age.is_err() {
+            return Err(Self::Err::ParseInt(age.unwrap_err()));
+        }
+        Ok(Person {
+            name: name.to_string(),
+            age: age.unwrap(),
+        })
+    }
 }
 
 fn main() {
